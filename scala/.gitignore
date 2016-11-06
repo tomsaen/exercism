@@ -1,0 +1,9 @@
+# Remove IntelliJ things
+
+.idea
+!.idea/runConfigurations
+target/
+project/project/
+/logs
+/.target/
+/node_modules
