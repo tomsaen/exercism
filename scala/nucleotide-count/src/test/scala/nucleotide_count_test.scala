@@ -26,19 +26,16 @@ class NucleotideCountSpecs extends FlatSpec with Matchers {
   behavior of "nucleotideCounts"
 
   it should "have no nucleotides" in {
-    pending
     val expected = Right(Map('A' -> 0, 'T' -> 0, 'C' -> 0, 'G' -> 0))
     new DNA("").nucleotideCounts should be (expected)
   }
 
   it should "have only guanine" in {
-    pending
     val expected = Right(Map('A' -> 0, 'T' -> 0, 'C' -> 0, 'G' -> 8))
     new DNA("GGGGGGGG").nucleotideCounts should be (expected)
   }
 
   it should "count a nucleotide only once" in {
-    pending
     val dna = new DNA("CGATTGGG")
     val counts = dna.nucleotideCounts.right.get
     counts('T')
@@ -46,7 +43,6 @@ class NucleotideCountSpecs extends FlatSpec with Matchers {
   }
 
   it should "not change counts after counting adenine" in {
-    pending
     val dna = new DNA("GATTACA")
     val counts = dna.nucleotideCounts.right.get
     counts('A')
@@ -55,7 +51,6 @@ class NucleotideCountSpecs extends FlatSpec with Matchers {
   }
 
   it should "count all nucleotides" in {
-    pending
     val s = "AGCTTTTCATTCTGACTGCAACGGGCAATATGTCTCTGTGTGGATTAAAAAAAGAGTGTCTGATAGCAGC"
     val dna = new DNA(s)
     val expected = Right(Map('A' -> 20, 'T' -> 21, 'G' -> 17, 'C' -> 12))
@@ -63,7 +58,6 @@ class NucleotideCountSpecs extends FlatSpec with Matchers {
   }
 
   it should "validate dna" in {
-    pending
     new DNA("GACYT").nucleotideCounts should be (Left("invalid nucleotide 'Y'"))
   }
 }

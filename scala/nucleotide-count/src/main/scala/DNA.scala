@@ -1,22 +1,30 @@
 /**
   * Created by thomas.mueller on 05/11/16.
   */
+
 class DNA(input: String) {
 
     val validNucs = Set('A', 'C', 'G', 'T')
 
-    val counts = input.toCharArray.groupBy(identity).mapValues(_.size)
-
-    val nucCounts = validNucs.map(char => (char, counts.getOrElse(char, 0))).toMap
+    val normalized = input.toCharArray
 
     def count(nuc: Char): Either[String, Int] = {
-        println(nucCounts)
-        if (nucCounts.contains(nuc))
-            Right(nucCounts(nuc))
-        else
-            Left(s"invalid nucleotide '$nuc'")
+      val counts = nucleotideCounts
+
+      counts match {
+        case Left(x) => Left(x)
+        case Right(x) =>
+          if (x.contains(nuc)) Right(x(nuc))
+          else Left(s"invalid nucleotide '$nuc'")
+      }
     }
 
-    def nucleotideCounts: Either[String, Map[Char, Int]] = Left("Not implemented yet")
-
+    def nucleotideCounts: Either[String, collection.mutable.Map[Char, Int]] = {
+      val counts = collection.mutable.Map[Char, Int]('A' -> 0, 'C' -> 0, 'G' -> 0, 'T' -> 0)
+      for (nuc <- normalized) {
+        if (!validNucs.contains(nuc)) return Left(s"invalid nucleotide '$nuc'")
+        else counts(nuc) += 1
+      }
+      Right(counts)
+    }
 }
